@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python
+    - name: Set up Python 3.10
       uses: actions/setup-python@v5
       with:
         python-version: '3.10'
@@ -31,18 +31,13 @@ jobs:
         python3 -m pip install --upgrade pip
         pip install --upgrade cython==0.29.36 virtualenv
 
-    - name: Cache Buildozer global directory
-      uses: actions/cache@v4
-      with:
-        path: ~/.buildozer
-        key: buildozer-${{ hashFiles('buildozer.spec') }}
-        restore-keys: |
-          buildozer-
+    # আগের কোনো ত্রুটিপূর্ণ ক্যাশ যেন না থাকে, তাই ফ্রেশ বিল্ড করা হবে
+    - name: Clean up old buildozer cache
+      run: rm -rf ~/.buildozer
 
     - name: Build with Buildozer (Native)
       run: |
         pip install buildozer
-        # লাইসেন্স এক্সেপ্ট করার কমান্ড যুক্ত করা হয়েছে
         yes | buildozer -v android debug || true
         yes | buildozer -v android debug
 
