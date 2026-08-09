@@ -34,6 +34,9 @@ android.minAPI = 21
 # (str) Android architectural build types
 android.archs = armeabi-v7a
 
+# (str) Android NDK version to use
+android.ndk = 25b
+
 # (str) Android permissions
 android.permissions = GET_ACCOUNTS, INTERNET, ACCESS_NETWORK_STATE, RECORD_AUDIO
 
