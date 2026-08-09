@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
     - uses: actions/checkout@v4
@@ -16,19 +16,30 @@ jobs:
       with:
         python-version: '3.10'
 
-    # বিল্ড স্পিড বাড়াতে এবং ডকার ক্র্যাশ এড়াতে ক্যাশ যুক্ত করা হলো
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config \
+          zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake libffi-dev libssl-dev
+
+    - name: Upgrade Cython and Buildozer dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip install --upgrade cython==0.29.36 virtualenv
+
     - name: Cache Buildozer global directory
       uses: actions/cache@v4
       with:
-        path: .buildozer
+        path: ~/.buildozer
         key: buildozer-${{ hashFiles('buildozer.spec') }}
         restore-keys: |
           buildozer-
 
-    - name: Build with Buildozer
-      uses: ArtemSBulgakov/buildozer-action@v1
-      with:
-        command: buildozer -v android debug
+    - name: Build with Buildozer (Native)
+      run: |
+        pip install buildozer
+        buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
