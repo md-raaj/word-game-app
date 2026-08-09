@@ -7,6 +7,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    
+    # Node.js 24 ফোর্সিং এনভায়রনমেন্ট ভ্যারিয়েবল যুক্ত করা হলো
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - uses: actions/checkout@v4
