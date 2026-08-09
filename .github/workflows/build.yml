@@ -7,8 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
-
-    # Node.js 24 ফোর্সিং এনভায়রনমেন্ট ভ্যারিয়েবল যুক্ত করা হলো
+    
     env:
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -43,6 +42,8 @@ jobs:
     - name: Build with Buildozer (Native)
       run: |
         pip install buildozer
+        # অ্যান্ড্রয়েড SDK লাইসেন্স স্বয়ংক্রিয়ভাবে গ্রহণ করার জন্য এই লাইনটি দেওয়া হলো
+        yes | buildozer -v android debug || true
         buildozer -v android debug
 
     - name: Upload APK Artifact
