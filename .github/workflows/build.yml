@@ -42,9 +42,8 @@ jobs:
     - name: Build with Buildozer (Native)
       run: |
         pip install buildozer
-        # অ্যান্ড্রয়েড SDK লাইসেন্স স্বয়ংক্রিয়ভাবে গ্রহণ করার জন্য এই লাইনটি দেওয়া হলো
-        yes | buildozer -v android debug || true
-        buildozer -v android debug
+        # মেমোরি ক্র্যাশ এড়াতে সিঙ্গেল থ্রেড এবং ফোর্সড বিল্ড কমান্ড
+        buildozer -v android debug || buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
