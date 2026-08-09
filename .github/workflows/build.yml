@@ -42,8 +42,9 @@ jobs:
     - name: Build with Buildozer (Native)
       run: |
         pip install buildozer
-        # মেমোরি ক্র্যাশ এড়াতে সিঙ্গেল থ্রেড এবং ফোর্সড বিল্ড কমান্ড
-        buildozer -v android debug || buildozer -v android debug
+        # লাইসেন্স এক্সেপ্ট করার কমান্ড যুক্ত করা হয়েছে
+        yes | buildozer -v android debug || true
+        yes | buildozer -v android debug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
